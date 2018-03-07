@@ -7,14 +7,12 @@
  ********************************************************************
 */
 
+package models;
 
 import java.awt.*;
 import java.lang.Math;
 import java.awt.event.*;
 import javax.swing.*;
-
-
-
 
 public class Pendule extends JFrame implements Runnable{
 //Classe qui décrit une montre avec un affichage des aiguilles
