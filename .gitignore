@@ -3,5 +3,6 @@
 
 # IntelliJ files
 .idea/
+out/
 *.iml
 
