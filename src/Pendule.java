@@ -16,7 +16,7 @@ import javax.swing.*;
 
 
 
-public class Pendule extends JFrame {
+public class Pendule extends JFrame implements Runnable{
 //Classe qui décrit une montre avec un affichage des aiguilles
 	
 	private int dureeSeconde;       // Durée de la seconde en msec.
@@ -26,6 +26,7 @@ public class Pendule extends JFrame {
     private static int TAILLE = 100; // Taille de la demi-fenétre
     private ToileGraphique toile;
 
+    private Thread time;
 
     //------------------------------------------------------------------------
     class ToileGraphique extends JPanel {
@@ -81,6 +82,9 @@ public class Pendule extends JFrame {
         setVisible(true);
 
 	    dureeSeconde = valSeconde;
+
+	    time = new Thread(this);
+	    time.start();
    }
 
     public void incrementerSecondes(){
@@ -90,6 +94,19 @@ public class Pendule extends JFrame {
         	incrementerMinutes();
         }
     }
+
+	public void run(){
+		while (true) {
+			try{
+				Thread.sleep(dureeSeconde);
+			}
+			catch(InterruptedException e){
+			}
+
+			incrementerSecondes();
+			toile.repaint();
+		}
+	}
 
     public void incrementerMinutes() {
       minutes = ++minutes % 60 ;
