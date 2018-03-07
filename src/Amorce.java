@@ -1,6 +1,7 @@
 import models.Pendule;
 import models.Emetteur;
 import views.VueEmetteur;
+import views.VuePendule;
 
 /****************************************************************
  * Auteur:	    Eric Lefrançois                                 *
@@ -22,8 +23,9 @@ public class Amorce {
 
 
         // Création d'une pendule, avec une seconde valant 120msec (plus lente que l'emetteur
-        Pendule pendule = new Pendule("H", 120, 100, 0);
-
+        Pendule pendule = new Pendule(120);
+        VuePendule vuePendule1 = new VuePendule("H", 100,0);
+        pendule.addObserver(vuePendule1);
 
     }
 }
