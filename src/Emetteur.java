@@ -13,7 +13,7 @@ import javax.swing.*;
 
 
 
-class Emetteur extends JFrame {
+class Emetteur extends JFrame implements Runnable{
 
   private final static int LARGEUR = 100;		// largeur fenêtre de l'emetteur
   private final static int HAUTEUR = 100;		// hauteur fenêtre de l'emetteur
@@ -24,7 +24,8 @@ class Emetteur extends JFrame {
 
   private JLabel champAffichage = new JLabel("00");
   private Font fonte = new Font ("TimeRoman",  Font.BOLD, 80);
-	
+
+  private Thread emetteur;
 
 // Constructeur
     public Emetteur (int dureeSeconde) {
@@ -39,6 +40,20 @@ class Emetteur extends JFrame {
 		    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    setVisible(true);
 
+		    emetteur = new Thread(this);
+		    emetteur.start();
+    }
+
+    public void run(){
+        while (true){
+            try{
+                Thread.sleep(dureeSeconde);
+                heureMettreAJour();
+            }
+            catch(InterruptedException e){
+                System.out.println(e);
+            }
+        }
     }
 
     private void heureMettreAJour () {
