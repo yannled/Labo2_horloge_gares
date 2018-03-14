@@ -10,6 +10,7 @@
 package models;
 
 import java.util.Observable;
+import java.util.Observer;
 
 public class Emetteur extends Observable implements Runnable{
 
@@ -18,12 +19,23 @@ public class Emetteur extends Observable implements Runnable{
 
   private Thread time;
 
+  private MinuteEmetteur minuteEmetteur;
+
+  private class MinuteEmetteur extends Observable{
+     private void minuteUpdate(){
+        this.setChanged();
+        this.notifyObservers();
+     }
+  }
+
 // Constructeur
     public Emetteur (int dureeSeconde) {
         this.dureeSeconde = dureeSeconde;
 
 		    time = new Thread(this);
 		    time.start();
+
+		    minuteEmetteur = new MinuteEmetteur();
     }
 
     public void run(){
@@ -35,6 +47,9 @@ public class Emetteur extends Observable implements Runnable{
           }
           
           heureMettreAJour();
+
+          if(secondes == 0)
+             minuteEmetteur.minuteUpdate();
        }
     }
 
@@ -43,4 +58,9 @@ public class Emetteur extends Observable implements Runnable{
         setChanged();
         notifyObservers(secondes);
     }
+
+    public void addMinuteObserver(Observer o){
+     minuteEmetteur.addObserver(o);
+    }
+
 }

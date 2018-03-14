@@ -13,9 +13,10 @@ import java.awt.*;
 import java.lang.Math;
 import java.lang.reflect.Array;
 import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 
-public class Pendule extends Observable implements Runnable{
+public class Pendule extends Observable implements Runnable, Observer {
 //Classe qui décrit une montre avec un affichage des aiguilles
 	
 	private int dureeSeconde;       // Durée de la seconde en msec.
@@ -37,7 +38,6 @@ public class Pendule extends Observable implements Runnable{
     	secondes ++;
         if (secondes == 60) {   
         	secondes = 0;
-        	incrementerMinutes();
         }
     }
 
@@ -62,4 +62,8 @@ public class Pendule extends Observable implements Runnable{
       }
     }
 
+    public void update(Observable o, Object p){
+		 secondes = 0;
+		 incrementerMinutes();
+	 }
 }
