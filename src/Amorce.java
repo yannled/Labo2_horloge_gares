@@ -18,13 +18,13 @@ public class Amorce {
     public static void main (String argv[]){
 
         Emetteur emetteur = new Emetteur(100);  	// Emetteur avec une seconde de 100msec
-        VueEmetteur vueEmetteur1 = new VueEmetteur();
+        VueEmetteur vueEmetteur1 = new VueEmetteur(emetteur);
         emetteur.addObserver(vueEmetteur1);
 
 
         // Création d'une pendule, avec une seconde valant 120msec (plus lente que l'emetteur
         Pendule pendule = new Pendule(120);
-        VuePendule vuePendule1 = new VuePendule("H", 100,0);
+        VuePendule vuePendule1 = new VuePendule(pendule,"H", 100,0);
         pendule.addObserver(vuePendule1);
 
     }

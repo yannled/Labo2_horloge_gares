@@ -1,5 +1,7 @@
 package views;
 
+import models.Emetteur;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
@@ -13,8 +15,10 @@ public class VueEmetteur extends JFrame implements Observer {
    private JLabel champAffichage = new JLabel("00");
    private Font fonte = new Font ("TimeRoman",  Font.BOLD, 80);
 
+   private Emetteur modelEmetteur;
+
    // Constructeur
-   public VueEmetteur () {
+   public VueEmetteur (Emetteur modelEmetteur) {
 
       getContentPane().add("North", champAffichage);
       champAffichage.setSize(LARGEUR, HAUTEUR);
@@ -25,6 +29,8 @@ public class VueEmetteur extends JFrame implements Observer {
       setLocation(200, 200);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setVisible(true);
+
+      this.modelEmetteur = modelEmetteur;
 
    }
 

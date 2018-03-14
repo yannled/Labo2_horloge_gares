@@ -4,6 +4,8 @@ import models.Pendule;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +17,11 @@ public class VuePendule extends JFrame implements Observer {
    private int heures = 0;
 
    private VuePendule.ToileGraphique toile;
+
+   private Pendule modelPendule;
+
+   private NumericHour numHours;
+   private buttonPlus btnPlus;
 
    //------------------------------------------------------------------------
    class ToileGraphique extends JPanel {
@@ -57,11 +64,50 @@ public class VuePendule extends JFrame implements Observer {
    }
    //------------------------------------------------------------------------
 
-   public VuePendule (String nom, int posX, int posY) {
+   class NumericHour extends JLabel {
+      public NumericHour() {
+         setBackground(Color.gray);
+         setSize( 1024, 768 );
+         updateNumericHours();
+      }
+      public void updateNumericHours(){
+         String time = heures + ":" + minutes + ":" + secondes;
+         this.setText(time);
+      }
+   }
+
+   class buttonPlus extends JButton{
+      public buttonPlus(String str){
+         super(str);
+      }
+      public void updateMin(){
+         modelPendule.incrementerMinutes();
+      }
+   }
+
+   //------------------------------------------------------------------------
+
+   public VuePendule (Pendule modelPendule, String nom, int posX, int posY) {
 
       toile = new ToileGraphique();
       setTitle(nom);
       getContentPane().add (toile, BorderLayout.CENTER);
+
+      this.modelPendule = modelPendule;
+
+      //Au nord
+      btnPlus = new buttonPlus("+");
+      btnPlus.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent actionEvent) {
+            btnPlus.updateMin();
+         }
+      });
+      this.getContentPane().add(btnPlus, BorderLayout.NORTH);
+
+      //Au sud
+      numHours = new NumericHour();
+      this.getContentPane().add(numHours, BorderLayout.SOUTH);
 
       pack();
       setResizable(false);
@@ -74,6 +120,8 @@ public class VuePendule extends JFrame implements Observer {
       secondes = ((Integer[])p)[0];
       minutes = ((Integer[])p)[1];
       heures = ((Integer[])p)[2];
+      numHours.updateNumericHours();
+
       toile.repaint();
    }
 }
