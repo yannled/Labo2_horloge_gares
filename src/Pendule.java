@@ -25,11 +25,12 @@ public class Pendule extends JFrame implements Runnable {
     private int heures = 0;
     private static int TAILLE = 100; // Taille de la demi-fenétre
     private ToileGraphique toile;
-
+	private NumericHour numHours;
+	private buttonPlus btnPlus;
 	private Thread horloge;
     //------------------------------------------------------------------------
     class ToileGraphique extends JPanel {
-		  
+
 		  public ToileGraphique() {
 				setBackground(Color.white);
 		  }
@@ -67,13 +68,44 @@ public class Pendule extends JFrame implements Runnable {
 		    }
     }
 
+    class NumericHour extends JLabel {
+    	public NumericHour() {
+    		setBackground(Color.gray);
+			setSize( 1024, 768 );
+			updateText("");
+		}
+		public void updateText(String text){
+			this.setText(text);
+		}
+	}
+
+	class buttonPlus extends JButton{
+    	public buttonPlus(String str){
+    		super(str);
+		}
+		public void updateMin(){
+			++minutes;
+		}
+	}
+
     //------------------------------------------------------------------------
     public Pendule (String nom, int valSeconde, int posX, int posY) {
 
         toile = new ToileGraphique();					
         setTitle(nom);
         getContentPane().add (toile, BorderLayout.CENTER);
-        
+		//Au nord
+		btnPlus = new buttonPlus("+");
+		btnPlus.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				btnPlus.updateMin();
+			}
+		});
+		this.getContentPane().add(btnPlus, BorderLayout.NORTH);
+		//Au sud
+		numHours = new NumericHour();
+		this.getContentPane().add(numHours, BorderLayout.SOUTH);
         pack();
         setResizable(false);
         setLocation (posX, posY);
@@ -91,6 +123,11 @@ public class Pendule extends JFrame implements Runnable {
     			Thread.sleep(dureeSeconde);
     			incrementerSecondes();
     			toile.repaint();
+    			Integer sec = secondes;
+    			Integer min = minutes;
+    			Integer hour = heures;
+    			String time = hour.toString() + ":" + min.toString() + ":" + sec.toString();
+    			numHours.updateText(time);
 
 			}catch (InterruptedException e){
 
