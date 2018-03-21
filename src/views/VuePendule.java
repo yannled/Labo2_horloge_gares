@@ -10,7 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class VuePendule extends JFrame implements Observer {
-   private static int TAILLE = 100; // Taille de la demi-fenétre
+   private static int TAILLE = 100; // Taille de la demi-fenetre
 
    private int minutes = 0;       	// Compteurs de la pendule
    private int secondes = 0;
