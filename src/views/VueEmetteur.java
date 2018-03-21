@@ -26,7 +26,7 @@ public class VueEmetteur extends JFrame implements Observer {
       setTitle("Emetteur");
 
       pack();
-      setLocation(200, 200);
+      setLocation(300, 200);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setVisible(true);
 

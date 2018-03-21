@@ -53,7 +53,7 @@ public class Emetteur extends Observable implements Runnable{
        }
     }
 
-    private void heureMettreAJour () {
+    synchronized private void heureMettreAJour () {
         secondes = ++secondes % 60;
         setChanged();
         notifyObservers(secondes);
